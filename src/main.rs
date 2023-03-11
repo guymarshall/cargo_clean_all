@@ -13,7 +13,7 @@ fn main() {
         let dir: DirEntry = dir.unwrap();
         let path: PathBuf = dir.path();
 
-        if path == program_dir.parent().unwrap() {
+        if path.starts_with(&program_dir.parent().unwrap()) {
             continue;
         }
 
