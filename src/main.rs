@@ -13,7 +13,11 @@ fn main() {
         let dir: DirEntry = dir.unwrap();
         let path: PathBuf = dir.path();
 
-        if path.is_dir() && path != program_dir.parent().unwrap() {
+        if path == program_dir.parent().unwrap() {
+            continue;
+        }
+
+        if path.is_dir() {
             let output: Output = Command::new("cargo")
                 .arg("clean")
                 .current_dir(&path)
