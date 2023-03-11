@@ -24,7 +24,11 @@ fn main() {
                 .output()
                 .expect("Failed to run cargo clean");
 
-            println!("{:?}", output);
+            println!("Cleaning directory: {} | Status: {} | Stdout: {} | Stderr: {}",
+                 path.display(),
+                 output.status,
+                 String::from_utf8_lossy(&output.stdout),
+                 String::from_utf8_lossy(&output.stderr));
         }
     }
 }
