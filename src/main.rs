@@ -1,3 +1,5 @@
+#![forbid(unsafe_code)]
+
 use std::process::{Command, Output};
 use std::fs;
 use std::fs::{DirEntry, ReadDir};
