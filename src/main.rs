@@ -12,8 +12,8 @@ fn main() {
     let directories: ReadDir = fs::read_dir(parent_directory).unwrap();
 
     for directory in directories {
-        let dir: DirEntry = directory.unwrap();
-        let path: PathBuf = dir.path();
+        let directory: DirEntry = directory.unwrap();
+        let path: PathBuf = directory.path();
 
         if path == current_directory || path == program_directory.parent().unwrap() {
             continue;
