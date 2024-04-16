@@ -26,13 +26,17 @@ fn main() {
                 .output()
                 .expect("Failed to run cargo clean");
 
-            println!(
-                "Cleaning directory: {} | Status: {} | Stdout: {} | Stderr: {}",
-                path.display(),
-                output.status,
-                String::from_utf8_lossy(&output.stdout),
-                String::from_utf8_lossy(&output.stderr)
-            );
+            match output.status.code() {
+                Some(0) => println!("Cleaned {} successfully", path.display()),
+                Some(101) => println!("No Cargo.toml file in {}", path.display()),
+                _ => println!(
+                    "Cleaning directory: {} | Status: {} | Stdout: {} | Stderr: {}",
+                    path.display(),
+                    output.status,
+                    String::from_utf8_lossy(&output.stdout),
+                    String::from_utf8_lossy(&output.stderr)
+                ),
+            }
         }
     }
 }
