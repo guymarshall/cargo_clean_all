@@ -1,5 +1,6 @@
 #![forbid(unsafe_code)]
 
+use rayon::prelude::*;
 use std::fs;
 use std::fs::{DirEntry, ReadDir};
 use std::path::{Path, PathBuf};
@@ -11,15 +12,12 @@ fn main() {
     let program_directory: PathBuf = std::env::current_exe().unwrap();
     let directories: ReadDir = fs::read_dir(parent_directory).unwrap();
 
-    for directory in directories {
+    directories.par_bridge().for_each(|directory| {
         let directory: DirEntry = directory.unwrap();
         let path: PathBuf = directory.path();
 
-        if path == current_directory || path == program_directory.parent().unwrap() {
-            continue;
-        }
-
-        if path.is_dir() {
+        if path != current_directory && path != program_directory.parent().unwrap() && path.is_dir()
+        {
             let output: Output = Command::new("cargo")
                 .arg("clean")
                 .current_dir(&path)
@@ -38,5 +36,5 @@ fn main() {
                 ),
             }
         }
-    }
+    });
 }
