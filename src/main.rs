@@ -1,8 +1,8 @@
 #![forbid(unsafe_code)]
 
-use rayon::prelude::*;
 use std::fs;
 use std::fs::{DirEntry, ReadDir};
+use std::io::Error;
 use std::path::{Path, PathBuf};
 use std::process::{Command, Output};
 
@@ -12,7 +12,7 @@ fn main() {
     let program_directory: PathBuf = std::env::current_exe().unwrap();
     let directories: ReadDir = fs::read_dir(parent_directory).unwrap();
 
-    directories.par_bridge().for_each(|directory| {
+    directories.for_each(|directory: Result<DirEntry, Error>| {
         let directory: DirEntry = directory.unwrap();
         let path: PathBuf = directory.path();
 
