@@ -1,5 +1,3 @@
-#![forbid(unsafe_code)]
-
 use std::fs;
 use std::fs::{DirEntry, ReadDir};
 use std::io::Error;
